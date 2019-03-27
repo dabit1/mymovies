@@ -4,7 +4,7 @@
 /node_modules
 
 #distribution
-/docs
+# /docs
 /docs-testing
 
 # testing
