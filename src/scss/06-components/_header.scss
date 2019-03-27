@@ -1,0 +1,25 @@
+.c-header {
+  flex-grow: 1;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  @include medium {
+    z-index: 2000;
+  }
+
+  header {
+    background-color: $header-color;
+  }
+
+  button:nth-child(1) {
+    margin-left: -12px;
+    margin-right: 20px;
+    @include medium {
+      display: none;
+    }
+  }
+
+  h2 {
+    flex: 1;
+  }
+}

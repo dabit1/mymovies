@@ -1,0 +1,21 @@
+{
+  "rootDir": "../../src",
+  "setupFiles": [
+    "<rootDir>/../config/testing/shim.js",
+    "<rootDir>/../config/testing/enzyme.js",
+    "<rootDir>/../config/testing/fetch.js"
+  ],
+  "moduleNameMapper": {
+    "\\.(css|scss|jpg|jpeg|png|gif)$": "<rootDir>/../config/testing/empty-module.js"
+  },
+  "testURL": "http://localhost/",
+  "coverageDirectory": "<rootDir>/../coverage",
+  "coverageThreshold": {
+    "./src/**/*.js": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  }
+}

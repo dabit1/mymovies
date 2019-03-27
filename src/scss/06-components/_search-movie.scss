@@ -1,0 +1,9 @@
+.c-search-movie {
+  > div:first-child {
+    background-color: $search-color;
+
+    input[type=text] {
+      color: white !important;
+    }
+  }
+}

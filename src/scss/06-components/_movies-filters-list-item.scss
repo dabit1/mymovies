@@ -1,0 +1,30 @@
+
+
+.c-movies-filters-list-item {
+  span {
+    color: $filter-active-color;
+  }
+
+  &__checkbox {
+    color: $filter-active-color;
+  }
+
+  > div:hover, > li:hover {
+    background-color: $filter-hover-color;
+  }
+
+  > div, > li {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.c-movies-filters-list-item.disabled {
+  span {
+    color: $filter-disabled-color;
+  }
+
+  .c-movies-filters-list-item__checkbox {
+    color: $filter-disabled-color;
+  }
+}

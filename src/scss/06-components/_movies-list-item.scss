@@ -1,0 +1,41 @@
+%text-inside-overlay {
+  color: white;
+  font-weight: normal;
+  z-index: 2;
+  position: relative;
+  margin: 0;
+}
+
+.c-movies-list-item {
+  outline: 0;
+
+  > div {
+    width: 100%;
+    padding: 15px 0 5px 0;
+    box-sizing: border-box;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  &__title {
+    @extend %text-inside-overlay;
+    font-size: 0.9em;
+    @include three-dots;
+  }
+
+  &__subtitle {
+    @extend %text-inside-overlay;
+    font-size: 0.8em;
+    justify-content: space-between;
+    @include flex;
+    margin-top: 5px;    
+    color: #727272;
+    font-style: normal;
+  }
+
+  &__star-icon {
+    color: #c5a05c;
+  }
+}

@@ -1,0 +1,41 @@
+sudo: required
+os: linux
+dist: trusty
+group: stable
+
+language: node_js
+node_js:
+  - "10.3.0"
+
+branches:
+  only:
+    - master
+    - testing
+
+cache:
+  directories:
+  - "$HOME/.npm"
+
+install:
+  - npm ci # instead of `npm install` since `npm ci` works faster
+
+script: ./ci/travis-commands.sh
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    target-branch: gh-pages
+    local-dir: docs
+    on:
+      branch: master
+
+#  - provider: s3 # to be filled
+#    access_key_id: ""
+#    secret_access_key: ""
+#    bucket: ""
+#    local_dir: build-testing
+#    skip_cleanup: true
+#    on:
+#      branch: testing

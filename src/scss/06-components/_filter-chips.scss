@@ -1,0 +1,11 @@
+.c-filter-chips {
+  @include flex;
+  flex-wrap: wrap;
+  margin: 24px 24px -15px;
+  background-color: inherit !important;
+  box-shadow: none !important;
+
+  &__chip {
+    margin: 5px 10px 5px 0;
+  }
+}

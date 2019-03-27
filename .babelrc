@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "browsers": [
+          "Explorer >= 10",
+          "last 2 versions"
+        ]
+      }
+    }]
+  ],
+  "plugins": ["syntax-object-rest-spread"]
+}

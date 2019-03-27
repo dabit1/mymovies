@@ -1,0 +1,26 @@
+.c-movies-list {
+  > div {
+    @include flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: space-between;
+    padding: 24px;
+
+    .c-movies-list-item {
+      width: 30%;
+      padding: 10px 1px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      @include medium {
+        width: 19%;
+      }
+    }
+  }
+
+  &__progress {
+    display: block !important;
+    margin: 20px auto;
+  }
+}

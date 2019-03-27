@@ -1,0 +1,25 @@
+// using ITCSS architecture
+
+// 01-SETTINGS
+@import "01-settings/colors";
+@import "01-settings/fonts";
+@import "01-settings/variables";
+@import "01-settings/breakpoints";
+
+// 02-TOOLS
+@import "02-tools/mixins";
+
+// 04-ELEMENTS
+@import "04-elements/page";
+
+// 06-COMPONENTS
+@import "06-components/initial-loading";
+@import "06-components/header";
+@import "06-components/home";
+@import "06-components/drawer";
+@import "06-components/movies-list";
+@import "06-components/movies-list-item";
+@import "06-components/search-movie";
+@import "06-components/movies-filters-list-item";
+@import "06-components/movie-details";
+@import "06-components/filter-chips";

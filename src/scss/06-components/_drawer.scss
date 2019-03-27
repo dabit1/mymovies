@@ -1,0 +1,10 @@
+.c-drawer {
+  &__paper {
+    background-color: $background-color !important;
+    width: $drawer-width;
+    @include medium {
+      position: relative !important;
+      overflow-y: visible !important;
+    }
+  }
+}

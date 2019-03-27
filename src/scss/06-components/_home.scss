@@ -1,0 +1,13 @@
+.c-home {
+  z-index: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  main {
+    background-color: $background-color;
+    padding: 0;
+    width: 100%;
+  }
+}
