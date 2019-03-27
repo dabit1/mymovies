@@ -28,7 +28,11 @@ module.exports = (env, argv, outputFolder = 'docs') => {
           cache: true,
           parallel: true,
         }),
-        new OptimizeCSSAssetsPlugin({}),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            zindex: false,
+          },
+        }),
       ],
     },
     output: {
