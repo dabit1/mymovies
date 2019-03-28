@@ -4,6 +4,7 @@ import { fetchMovies } from '../redux/actions/movies';
 
 const mapStateToProps = state => ({
   movies: state.movies.items,
+  apiPage: state.movies.page,
   isLoadingMovies: state.movies.isLoading,
 });
 

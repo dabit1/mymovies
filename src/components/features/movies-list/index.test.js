@@ -34,6 +34,7 @@ const setup = (rendering = 'shallow', loading = false) => {
       onFetchMoreMovies={onFetchMoreMoviesSpy}
       history={historySpy}
       isLoadingMovies={loading}
+      apiPage={0}
     />
   );
 
@@ -81,20 +82,67 @@ describe('MoviesList component suite', () => {
 
   it('should fetch more movies if there are no more movies in the current list', () => {
     const { wrapper, onFetchMoreMoviesSpy } = setup('mount');
+    wrapper.find('InfiniteScroll').props().loadMore(2);
     wrapper.find('InfiniteScroll').props().loadMore(3);
     expect(onFetchMoreMoviesSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should not fetch more movies if the page is the same as the current one', () => {
-    const { wrapper, onFetchMoreMoviesSpy } = setup('mount');
+  it('should increase pagination when fetching more movies', () => {
+    const { wrapper } = setup('mount');
     wrapper.find('InfiniteScroll').props().loadMore(2);
-    wrapper.find('InfiniteScroll').props().loadMore(2);
-    expect(onFetchMoreMoviesSpy).toHaveBeenCalledTimes(0);
+    wrapper.find('InfiniteScroll').props().loadMore(3);
+    expect(wrapper.state().page).toEqual(3);
   });
 
   it('should not fetch more movies if there are more movies in the current list', () => {
     const { wrapper, onFetchMoreMoviesSpy } = setup('mount');
     wrapper.find('InfiniteScroll').props().loadMore(2);
     expect(onFetchMoreMoviesSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not fetch more movies if there are no more movies to be fetched', () => {
+    const { wrapper, onFetchMoreMoviesSpy } = setup('mount');
+    wrapper.setState({ hasMoreToFetch: false });
+    wrapper.find('InfiniteScroll').props().loadMore(2);
+    wrapper.find('InfiniteScroll').props().loadMore(3);
+    expect(onFetchMoreMoviesSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not fetch more movies if there are movies being fetched', () => {
+    const { wrapper, onFetchMoreMoviesSpy } = setup('mount');
+    wrapper.setProps({ isLoadingMovies: true });
+    wrapper.find('InfiniteScroll').props().loadMore(2, true);
+    expect(onFetchMoreMoviesSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should reset the pagination if api page was reset', () => {
+    const { wrapper } = setup('mount');
+    wrapper.find('InfiniteScroll').props().loadMore(2);
+    wrapper.find('InfiniteScroll').props().loadMore(3);
+    wrapper.setProps({ apiPage: 1 });
+    wrapper.setProps({ apiPage: 0 });
+    expect(wrapper.state().page).toEqual(1);
+  });
+
+  it('should mark that there are more movies to be fetched if last fetching had success', () => {
+    const { wrapper } = setup('mount');
+    wrapper.setProps({ apiPage: 0 });
+    wrapper.setState({ hasMoreToFetch: false });
+    wrapper.find('InfiniteScroll').props().loadMore(2);
+    wrapper.find('InfiniteScroll').props().loadMore(3);
+    wrapper.setProps({ apiPage: 1 });
+    expect(wrapper.state().hasMoreToFetch).toBeTruthy();
+  });
+
+  it('should mark that there are not more movies to be fetched if last fetching had not success', () => {
+    const { wrapper } = setup('mount');
+    wrapper.find('InfiniteScroll').props().loadMore(2);
+    wrapper.find('InfiniteScroll').props().loadMore(3);
+    wrapper.setProps({ apiPage: 1 });
+    wrapper.find('InfiniteScroll').props().loadMore(4);
+    wrapper.find('InfiniteScroll').props().loadMore(5);
+    wrapper.setProps({ apiPage: 2, isLoadingMovies: true });
+    wrapper.setProps({ apiPage: 2, isLoadingMovies: false });
+    expect(wrapper.state().hasMoreToFetch).toBeFalsy();
   });
 });

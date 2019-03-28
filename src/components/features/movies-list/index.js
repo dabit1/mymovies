@@ -13,7 +13,24 @@ export default class MoviesList extends Component {
 
     this.state = {
       page: 1,
+      hasMoreToFetch: true,
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.apiPage !== 0 && this.props.apiPage === 0) {
+      this.setState({ page: 1 }); // eslint-disable-line react/no-did-update-set-state
+    }
+
+    if (prevProps.apiPage !== this.props.apiPage && !this.state.hasMoreToFetch) {
+      this.setState({ hasMoreToFetch: true }); // eslint-disable-line react/no-did-update-set-state
+    } else if (
+      prevProps.isLoadingMovies && !this.props.isLoadingMovies &&
+      this.props.movies.length === prevProps.movies.length &&
+      this.state.hasMoreToFetch
+    ) {
+      this.setState({ hasMoreToFetch: false }); // eslint-disable-line react/no-did-update-set-state
+    }
   }
 
   onPressMovie(movie) {
@@ -24,12 +41,12 @@ export default class MoviesList extends Component {
   }
 
   loadMore(page, isLoadingMovies) {
-    if ((page === 1 || page !== this.state.page) && !isLoadingMovies) {
+    if (!isLoadingMovies) {
       this.setState({ page });
 
       const hasMore = this.state.page * MOVIES_PER_PAGE < this.props.movies.length;
 
-      if (!hasMore) {
+      if (!hasMore && this.state.hasMoreToFetch) {
         this.props.onFetchMoreMovies();
       }
     }
@@ -61,7 +78,7 @@ export default class MoviesList extends Component {
         <InfiniteScroll
           initialLoad={false}
           pageStart={1}
-          loadMore={page => this.loadMore(page, isLoadingMovies)}
+          loadMore={() => this.loadMore(this.state.page + 1, isLoadingMovies)}
           hasMore
           loader={<span key={0} style={{ display: 'none' }} />} /* it does not work as expected */
         >
@@ -81,6 +98,7 @@ MoviesList.propTypes = {
   isLoadingMovies: PropTypes.bool,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  apiPage: PropTypes.number.isRequired,
 };
 
 MoviesList.defaultProps = {
